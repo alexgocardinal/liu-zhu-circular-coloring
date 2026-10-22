@@ -39,6 +39,8 @@ for line in result.stdout.splitlines():
 
 required = {
     "CircularColoring.no_coloring33_4",
+    "CircularColoring.counterexample_circular_bounds",
+    "CircularColoring.liu_zhu_counterexample",
     "CircularColoring.witness_in_range",
     "CircularColoring.witness_respects_edges",
 }

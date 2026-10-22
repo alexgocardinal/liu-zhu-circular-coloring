@@ -36,3 +36,9 @@ import CircularColoring.SlowFibers
 import CircularColoring.SegmentObstruction
 import CircularColoring.LocalSegments
 import CircularColoring.ExcludeSlow
+import CircularColoring.ConjectureGraphs
+import CircularColoring.RealCircularColoring
+import CircularColoring.RoundingBridge
+import CircularColoring.CircularAttainment
+import CircularColoring.RealColoringCertificates
+import CircularColoring.ConjectureCounterexample

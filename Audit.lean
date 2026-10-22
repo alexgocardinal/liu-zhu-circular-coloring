@@ -7,3 +7,11 @@ import CircularColoring
 #print axioms CircularColoring.no_fast_candidate
 #print axioms CircularColoring.no_slow_candidate
 #print axioms CircularColoring.no_coloring33_4
+#print axioms CircularColoring.counterexample_circular_bounds
+#print axioms CircularColoring.first_factor_ordinary_upper
+#print axioms CircularColoring.second_factor_ordinary_upper
+#print axioms CircularColoring.liu_zhu_strict_counterexample
+#print axioms CircularColoring.liu_zhu_counterexample
+#check @CircularColoring.liu_zhu_counterexample
+#check @CircularColoring.liu_zhu_strict_counterexample
+#check @CircularColoring.counterexample_circular_bounds

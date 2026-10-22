@@ -1,23 +1,30 @@
 # Circular coloring counterexample
 
-Author: Alex Chan, Harvard University and National Bureau of Economic Research.
+Alex Chan, Harvard University and National Bureau of Economic Research.
 
-This repository formalizes two finite statements about
-K_(5/2) OR K_(11/4), with vertex set Fin 5 × Fin 11:
+This repository formally disproves the Liu–Zhu circular-coloring
+inequality using K_(5/2) OR K_(11/4).
 
-- No (33,4)-coloring exists.
-- The supplied table is a valid (17,2)-coloring.
+## Main results
 
-The obstruction theorem is `CircularColoring.no_coloring33_4`.
-The upper-bound certificate is checked by `witness_in_range` and
-`witness_respects_edges` in `CircularColoring/Witness.lean`.
+- `CircularColoring.liu_zhu_counterexample` proves that the
+  Liu–Zhu inequality fails for these two factors.
+- `CircularColoring.liu_zhu_strict_counterexample` states the
+  strict inequality between the proposed bound and the product's
+  circular chromatic number.
+- `CircularColoring.counterexample_circular_bounds` proves
+  33/4 < chi_c(X) <= 17/2.
+
+The formalization includes the graph definitions, the finite
+obstruction, rounding of real colors, attainment of the minimum
+circumference, the explicit upper-bound coloring, and ordinary
+3-colorings of the factors. Ordinary chromatic numbers use Mathlib's
+definition. Circular chromatic numbers are defined as infima of
+feasible real circle circumferences.
 
 ## Verification
 
-The Lean toolchain is pinned in `lean-toolchain`. Mathlib is pinned
-in `lakefile.toml` and `lake-manifest.json`.
-
-After installing elan, run:
+Lean and Mathlib are pinned to version 4.35.0.
 
 ```sh
 lake exe cache get
@@ -25,26 +32,21 @@ lake build
 python3 scripts/check_axioms.py
 ```
 
-The audit permits only `propext`, `Classical.choice`, and `Quot.sound`.
-It checks the transitive axiom dependencies of the main obstruction
-and the other declarations printed by `Audit.lean`.
+The audit permits only `propext`, `Classical.choice`, and `Quot.sound`
+and checks the transitive dependencies of the final counterexample.
 
 ## Scope
 
-The formalization proves the fixed finite obstruction and verifies
-the explicit upper-bound coloring. It does not formalize the paper's
-infinite family or a general theory of circular chromatic numbers.
-The interpretation of the finite obstruction as a strict circular
-chromatic lower bound uses standard results discussed in the paper.
-
-Repository: https://github.com/alexgocardinal/liu-zhu-circular-coloring
+The fixed 55-vertex counterexample is formalized. The paper's
+infinite-family theorem and additional corollaries are not included
+in this formal verification.
 
 ## Manuscript
 
 [Paper PDF](paper/paper.pdf) · [LaTeX source](paper/paper.tex)
 
-Compile the manuscript with Tectonic:
-
 ```sh
 tectonic --outdir paper paper/paper.tex
 ```
+
+Repository: https://github.com/alexgocardinal/liu-zhu-circular-coloring
