@@ -38,3 +38,13 @@ The interpretation of the finite obstruction as a strict circular
 chromatic lower bound uses standard results discussed in the paper.
 
 Repository: https://github.com/alexgocardinal/liu-zhu-circular-coloring
+
+## Manuscript
+
+[Paper PDF](paper/paper.pdf) · [LaTeX source](paper/paper.tex)
+
+Compile the manuscript with Tectonic:
+
+```sh
+tectonic --outdir paper paper/paper.tex
+```

@@ -1,0 +1,321 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,tabularx,array}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\hypersetup{
+  pdftitle={Counterexamples to a circular coloring conjecture for the Cartesian sum},
+  pdfauthor={Alex Chan}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newcommand{\out}{N^{+}}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\cc}{\chi_c}
+
+\title{Counterexamples to a circular coloring conjecture for the Cartesian sum}
+\author{Alex Chan\\[2pt]
+  \small Harvard University and National Bureau of Economic Research\\[-1pt]
+  \small \texttt{achan@hbs.edu}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Liu and Zhu conjectured that the circular chromatic number of the Cartesian
+sum, also called the disjunctive or OR product, is at most
+$\max\{\cc(G)\chi(H),\chi(G)\cc(H)\}$.  We give an infinite family of
+counterexamples with both factors circular complete graphs.  The smallest
+instance here is $K_{5/2}\oplus K_{11/4}$, a $34$-regular graph on $55$
+vertices with $33/4<\chi_c\leq17/2$.
+The proof reduces a hypothetical coloring to two rigid arrangements of
+intervals on a circle and excludes both arrangements.
+\end{abstract}
+
+\section{Statement}
+For integers $p\geq 2q>0$, let $K_{p/q}$ have vertex set $\Z_p$, with
+distinct $x,y$ adjacent when their cyclic distance is at least $q$.  The
+Cartesian sum $G\oplus H$ has vertex set $V(G)\times V(H)$; two pairs are
+adjacent when at least one pair of corresponding coordinates is adjacent.
+A $(P,Q)$-coloring is a homomorphism to $K_{P/Q}$.  Liu and Zhu
+\cite{LiuZhu2008} conjectured
+\begin{equation}\label{eq:conj}
+ \cc(G\oplus H)\leq
+ \max\{\cc(G)\chi(H),\chi(G)\cc(H)\}.
+\end{equation}
+Their theorem concerning the ordinary chromatic number is a
+distinct statement.\footnote{A Lean~4 certificate for the $55$-vertex
+instance is available at
+\href{https://github.com/alexgocardinal/liu-zhu-circular-coloring}{the accompanying GitHub repository}
+(commit \texttt{a4b5b22}). It verifies the nonexistence of a
+$(33,4)$-coloring and the explicit $(17,2)$-coloring below.
+The certificate uses Lean and Mathlib version~4.35.0; the obstruction
+depends only on the standard logical axioms
+\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
+The infinite-family theorem and its circular-chromatic interpretation
+are proved in the text and are outside the formalization's scope.}
+
+\begin{theorem}\label{thm:main}
+Let $q\geq4$, let $p\in\{3q-2,3q-1\}$, and assume
+$\gcd(p,q)=\gcd(q,3)=1$.  Then
+\[
+ \cc\bigl(K_{5/2}\oplus K_{p/q}\bigr)>
+ \frac{3p}{q}
+ =\max\{\cc(K_{5/2})\chi(K_{p/q}),
+          \chi(K_{5/2})\cc(K_{p/q})\}.
+\]
+These graphs have $5p$ vertices and degree $5p-6q+3$.
+\end{theorem}
+
+In particular, $p=3q-1$ is admissible for every $q\geq4$ not divisible
+by $3$.  This gives infinitely many orders.  The $p=3q-2$ choice is
+admissible whenever $q$ is also odd.
+
+\begin{corollary}\label{cor:55}
+The graph $X=K_{5/2}\oplus K_{11/4}$ has $55$ vertices, $935$ edges, and
+degree $34$, and satisfies $33/4<\cc(X)\leq17/2$ and $\chi(X)=9$.
+\end{corollary}
+\begin{proof}
+Apply Theorem~\ref{thm:main} with $(p,q)=(11,4)$.  The coloring
+$(a,b)\mapsto3\lfloor a/2\rfloor+\lfloor b/4\rfloor$ takes values in
+$\{0,\ldots,8\}$ and is proper: each color class is contained in a
+product of two consecutive blocks, independent in the respective
+factors.  The explicit $(17,2)$-coloring in Table~\ref{tab:witness}
+gives the other circular bound.  Since $\chi(X)=\lceil\cc(X)\rceil$, the strict lower bound gives
+$\chi(X)\geq9$.  The degree follows by counting nonneighbors: a vertex
+has $(2\cdot2-1)(2\cdot4-1)=21$ possible coordinatewise nonneighbors,
+including itself, out of $55$ vertices.  Hence its degree is $55-21=34$.
+\end{proof}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{c*{11}{r}}
+\toprule
+ $a\backslash b$ & 0&1&2&3&4&5&6&7&8&9&10\\\midrule
+ 0&0&0&11&11&11&11&6&6&6&0&0\\
+ 1&16&15&15&10&10&10&5&5&5&5&16\\
+ 2&15&15&14&14&9&9&9&4&4&4&3\\
+ 3&2&13&13&13&13&8&8&8&3&3&3\\
+ 4&1&1&12&12&12&7&7&7&7&1&1
+\\
+\bottomrule
+\end{tabular}
+\caption{A $(17,2)$-coloring of $X$: the entry in row $a$, column $b$
+is the color of $(a,b)\in\Z_5\times\Z_{11}$.  Every edge has target
+cyclic color distance at least $2$.}\label{tab:witness}
+\end{table}
+
+\begin{corollary}[identical factors]\label{cor:diagonal}
+The graph $K_{11/4}\oplus K_{11/4}$ violates \eqref{eq:conj}.
+It has $121$ vertices and $4356$ edges.
+\end{corollary}
+\begin{proof}
+The map $a\mapsto\lfloor11a/5\rfloor$ sends $K_{5/2}$
+homomorphically into $K_{11/4}$.  Taking its product with the identity
+on $K_{11/4}$ sends $X$ into the stated graph, whose circular chromatic
+number is therefore greater than $33/4$.  The proposed right side for
+these two identical factors is $33/4$.  The edge count follows from
+degree $121-(2\cdot4-1)^2=72$.
+\end{proof}
+
+\section{A saturated interval system}
+We prove the theorem.  Put $G=K_{5/2}$, $H=K_{p/q}$, and $P=3p$.
+The independent sets of $G$ are singletons and consecutive pairs in a
+geometric $5$-cycle (whose edges are the nonedges of $G$).
+
+Every independent set of $H$ is contained in a cyclic arc of $q$
+consecutive residues.  Indeed, translate one of its elements to $0$.
+All other elements lie in $[0,q-1]\cup[p-q+1,p-1]$.  If $u$ and $-v$
+are the extreme elements on the two sides and $u+v\geq q$, then their
+compatibility forces $p-(u+v)\leq q-1$; since $u+v\leq2q-2$, this gives
+$p\leq3q-3$, contrary to the hypothesis.  Thus $u+v\leq q-1$.
+Consequently $\alpha(H)=q$, and its maximum independent sets are
+precisely its cyclic $q$-arcs.  The identity $(p,q)$-coloring and the
+fractional lower bound $|V(H)|/\alpha(H)$ show $\cc(H)=p/q$.
+Three consecutive $q$-arcs give a $3$-coloring, while $p/q>2$ shows
+$\chi(H)=3$.  Similarly $\cc(G)=5/2$ and $\chi(G)=3$.  As $p/q\geq5/2$,
+the right side of \eqref{eq:conj} is $3p/q$.  Our coprimality assumptions
+give $\gcd(P,q)=1$.  It suffices to show that there is no $(P,q)$-coloring
+of $G\oplus H$: for a finite graph, $\cc(F)\leq P/q$ if and only if
+$F\to K_{P/q}$ \cite{LiuZhu2008}.
+
+Suppose such a coloring $c$ exists.  Replace each color $c(a,b)$ by its
+interval $I(a,b)$ of $q$ consecutive slots in $\Z_P$.  Intervals
+corresponding to adjacent vertices are disjoint.  Write
+$U_b=\bigcup_{a\in\Z_5}I(a,b)$.  We claim $|U_b|\geq3q$.
+If $U_b$ is not the whole circle, cut it at an unoccupied slot, and let
+$J$ be the intersection graph of its five line intervals.  Since $G$
+is a subgraph of the complement of $J$, the interval-graph coloring
+property gives
+\[
+ 3=\chi(G)\leq\chi(\overline J)=\alpha(J)
+ \leq\left\lfloor\frac{|U_b|}{q}\right\rfloor.
+\]
+The claim is immediate if $U_b=\Z_P$.  At a target slot, the active
+second coordinates form an independent set of $H$, so at most $q$ fibers
+are active.  Therefore
+\begin{equation}\label{eq:occupancy}
+ 3pq\leq\sum_{b\in\Z_p}|U_b|\leq Pq=3pq.
+\end{equation}
+Equality gives $|U_b|=3q<P$ for all $b$ and exactly $q$ active fibers
+at each slot.  They form a cyclic $q$-arc in $H$.
+
+Each occupied run of $U_b$ has length divisible by $q$.  For if its run
+lengths are $\ell_1,\ldots,\ell_k$, disjoint length-$q$ intervals fit
+at most $\sum_i\lfloor\ell_i/q\rfloor$ times, whereas the preceding
+interval argument requires at least three.  Hence
+\[
+ 3\leq\sum_i\left\lfloor\ell_i/q\right\rfloor
+ \leq\sum_i\ell_i/q=3.
+\]
+Partition the runs into $q$-blocks; there are three for each fiber.
+Let $x_t$ be the number of blocks beginning at slot $t\in\Z_P$.
+Every slot is covered by exactly $q$ blocks, giving
+$\sum_{j=0}^{q-1}x_{t-j}=q$.  Subtracting consecutive equations gives
+$x_t=x_{t-q}$.  Since $\gcd(P,q)=1$, we have $x_t=1$ for every $t$.
+Let $b_t$ denote the second coordinate of the unique block beginning
+at $t$.  This is a cyclic word of length $P$; each label occurs three
+times, and the labels of every $q$ consecutive blocks are distinct
+and form a cyclic $q$-arc in $H$.
+
+\section{The two possible block words}
+\begin{lemma}\label{lem:phase}
+Up to reversing the cyclic order of $H$, exactly one of the following
+forms can arise from the preceding block word:
+\begin{enumerate}
+\item Each $U_b$ is the union of three isolated $q$-runs.
+\item Each $U_b$ is one $3q$-run, and the $p$ run starts occur every
+three target slots.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+At time $t$ consider the ordered queue $(b_t,\ldots,b_{t+q-1})$.
+Its underlying set is a cyclic $q$-arc.  Two successive queues have
+$q-1$ common labels.  Since $p>2q$, their arcs either agree or differ
+by shifting one endpoint one place.  Let $D_t$ be the net forward
+displacement of the arc up to time $t$, lifting its starting label to
+the integers.  Give each queue entry its start-time residue modulo $q$.
+The departing and arriving entries have the same residue.  If $\tau_k$
+is the residue initially at spatial position $k$ in the arc, then the
+residue at position $k$ at time $t$ is $\tau_{k+D_t}$.
+
+After $L=P=3p$ steps, the ordered queue returns to itself, while all
+start-time residues have increased by $L$ modulo $q$.  The arc has
+completed an integer number $W$ of turns, so $D_L=pW$ and
+\begin{equation}\label{eq:closure}
+ \tau_{k+D_L}=\tau_k+L\pmod q.
+\end{equation}
+The $\tau_k$ are a permutation of $\Z_q$.  If $g=\gcd(D_L,q)$,
+iterating \eqref{eq:closure} $q/g$ times gives
+$(q/g)L\equiv0\pmod q$; since $\gcd(L,q)=1$, we must have $g=1$.
+Reverse the labeling of
+$H$ if necessary so that $D_L>0$, hence $W\geq1$.
+Equation \eqref{eq:closure} also forces
+$\tau_k=\tau_0+ak\pmod q$ for some $1\leq a<q$.
+
+Set $z_t=t-\tau_0-aD_t\pmod q$.  A hold advances $z$ by one.
+A forward move is possible only at $z=0$ and sends $z$ to $1-a$;
+a backward move is possible only at $z=-a$ and sends $z$ to $1$.
+This directed phase graph consists of the ordinary $q$-cycle of holds
+and two chords.  Its simple directed cycles are: $q$ holds; one forward
+move and $a-1$ holds; or one backward move and $q-a-1$ holds.
+In particular, if their multiplicities in a closed-walk decomposition
+are $N_0,N_+,N_-$, then
+\[
+ L=qN_0+aN_++(q-a)N_-,\qquad D_L=N_+-N_-.
+\]
+Substituting $D_L=pW$ yields
+\begin{equation}\label{eq:phase-arithmetic}
+ 3p=apW+q(N_0+N_-).
+\end{equation}
+Thus $1\leq aW\leq3$ and, by $\gcd(p,q)=1$,
+$aW\equiv3\pmod q$.  As $q\geq4$, necessarily $aW=3$ and
+$N_0=N_-=0$.  Either $(a,W)=(1,3)$, a forward step every slot, or
+$(a,W)=(3,1)$, a forward step every three slots.  In the first case
+each label traverses the arc three times, occupying three isolated
+$q$-runs.  In the second it traverses the arc once, occupying a
+single $3q$-run, with new runs starting every three slots.
+\end{proof}
+
+\section{Excluding both forms}
+\begin{lemma}[cyclic interval expansion]\label{lem:expansion}
+Let $A$ be a nonempty subset of $\Z_L$, and let $1\leq r\leq L$.
+The union of the length-$r$ cyclic intervals starting at the elements
+of $A$ has size at least
+\[
+  \min\{L,|A|+r-1\}.
+\]
+\end{lemma}
+\begin{proof}
+Set $B_0=A$ and $B_{j+1}=B_j\cup(B_j+1)$. A nonempty proper
+subset of $\Z_L$ cannot be invariant under translation by one.
+Consequently each step increases the cardinality by at least one
+until the whole circle is occupied. The required union is $B_{r-1}$.
+\end{proof}
+
+Consider the first form of Lemma~\ref{lem:phase}. Each vertex
+interval must coincide with one of its fiber's three isolated
+$q$-blocks. Fix $a\in\Z_5$. The $p$ vertices $(a,b)$, with
+$b\in\Z_p$, have distinct interval starts: a slot is the start of
+exactly one block, and that block belongs to exactly one fiber.
+Thus, writing
+\[
+  V_a=\bigcup_{b\in\Z_p} I(a,b),
+\]
+Lemma~\ref{lem:expansion} gives $|V_a|\geq p+q-1$, since
+$p+q-1<P=3p$.
+
+At any target slot, the active first coordinates form an independent
+set of $K_{5/2}$, so there are at most two. Double counting gives
+\[
+  5(p+q-1)\leq\sum_{a\in\Z_5}|V_a|\leq2P=6p.
+\]
+It follows that $5(q-1)\leq p$. This contradicts
+$p\leq3q-1<5(q-1)$ for $q\geq4$, excluding the first form.
+
+\begin{lemma}[three shifted segments]\label{lem:segments}
+Suppose three proper assignments of length-$q$ intervals to the
+vertices of $K_{5/2}$ are contained in respective segments of length
+$3q$, starting at $0,d,2d$, where $0<d<q$.  If intervals associated
+with adjacent vertices in different assignments are also disjoint,
+then $2d=q$.
+\end{lemma}
+\begin{proof}
+For any one assignment, orient each edge of $K_{5/2}$ toward the
+larger interval start.  An odd cycle has a directed two-edge path.
+Its two consecutive start differences are at least $q$, while all
+starts lie in an interval of length $2q$.  The three starts must
+therefore be $0,q,2q$.  Label those vertices $0,2,4$ in the
+complementary $5$-cycle.  The other starts have the form $x,q+y$,
+where $0\leq x\leq y\leq q$.
+
+Normalize the first assignment to have anchors $0,2,4$ at
+$0,q,2q$.  The first anchor of the second assignment, at $d$,
+overlaps the first anchors $0$ and $2$, so its label must be $1$,
+the unique label nonadjacent to both.  Its middle anchor at $q+d$
+overlaps anchors $2$ and $4$ of the first assignment and must
+have label $3$.  Repeating this reasoning, the third assignment's
+first anchor at $2d$ has label $2$.  It must be disjoint from the
+first assignment's anchors $0$ at $0$ and $4$ at $2q$.
+These two requirements give $2d\geq q$ and $2d\leq q$.
+\end{proof}
+
+In the second form of Lemma~\ref{lem:phase}, three successive fiber
+runs start at $0,3,6$ after translation.  Their $3q$-segments fit
+in a line because $3q+6<3p$.  Intervals for adjacent first
+coordinates in different fibers are disjoint by the definition of
+the Cartesian sum.  Lemma~\ref{lem:segments}, with $d=3$, forces
+$q=6$, contradicting $\gcd(q,3)=1$.  Finally, each vertex has
+$3(2q-1)$ coordinatewise nonneighbors, including itself, among the
+$5p$ vertices; hence its degree is $5p-6q+3$.  This finishes the proof
+of Theorem~\ref{thm:main}. \qed
+
+\begin{thebibliography}{1}
+\bibitem{LiuZhu2008}
+D. D.-F. Liu and X. Zhu, Coloring the Cartesian sum of graphs,
+\emph{Discrete Mathematics} \textbf{308} (2008), 5928--5936.
+\href{https://doi.org/10.1016/j.disc.2007.11.005}{doi:10.1016/j.disc.2007.11.005}.
+\end{thebibliography}
+\end{document}
