@@ -10,15 +10,35 @@ permissions:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
 
     steps:
       - uses: actions/checkout@v7
+
+      - name: Free runner disk space
+        shell: bash
+        run: |
+          df -h /
+          sudo rm -rf \
+            /usr/local/lib/android \
+            /usr/share/dotnet \
+            /opt/ghc \
+            /usr/local/.ghcup \
+            /opt/hostedtoolcache/CodeQL
+          df -h /
+
       - uses: leanprover/lean-action@v1
         with:
           build: "true"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
+          use-github-cache: "false"
+
       - name: Audit theorem axioms
         run: python3 scripts/check_axioms.py
+
+      - name: Report remaining disk space
+        if: always()
+        run: df -h /
