@@ -46,16 +46,16 @@ A $(P,Q)$-coloring is a homomorphism to $K_{P/Q}$.  Liu and Zhu
  \max\{\cc(G)\chi(H),\chi(G)\cc(H)\}.
 \end{equation}
 Their theorem concerning the ordinary chromatic number is a
-distinct statement.\footnote{A Lean~4 certificate for the $55$-vertex
-instance is available at
-\href{https://github.com/alexgocardinal/liu-zhu-circular-coloring}{the accompanying GitHub repository}
-(commit \texttt{a4b5b22}). It verifies the nonexistence of a
-$(33,4)$-coloring and the explicit $(17,2)$-coloring below.
-The certificate uses Lean and Mathlib version~4.35.0; the obstruction
-depends only on the standard logical axioms
-\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
-The infinite-family theorem and its circular-chromatic interpretation
-are proved in the text and are outside the formalization's scope.}
+distinct statement.\footnote{A Lean~4 formalization of the $55$-vertex counterexample
+is available in
+\href{https://github.com/alexgocardinal/liu-zhu-circular-coloring/tree/b202b346540cf09199d7c44ec1886a147dabc5cf}{the accompanying GitHub repository}
+(commit \texttt{b202b346540c}). It proves
+$33/4<\cc(K_{5/2}\oplus K_{11/4})\leq17/2$ and the failure of
+\eqref{eq:conj} for these factors, including the real-color rounding
+argument, attainment of the minimum circumference, and the required
+factor-coloring bounds. The formalization uses Lean and Mathlib
+version~4.35.0 and only the standard logical axioms. The infinite-family
+theorem remains outside the formalization.}
 
 \begin{theorem}\label{thm:main}
 Let $q\geq4$, let $p\in\{3q-2,3q-1\}$, and assume
